@@ -20,7 +20,7 @@ with open("thekey.key", "rb") as key:
 
 # Secret phrase to activate decryption script (optional)
 secret_phrase = "ransomware"
-user_phrase = input("Enter the secret phrase/n")
+user_phrase = input("Enter the secret phrase: ")
 
 if user_phrase == secret_phrase:
 
